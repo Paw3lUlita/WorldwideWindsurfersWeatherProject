@@ -1,17 +1,10 @@
-package pl.ulita.worldwidewindsurfersweatherproject.model;
+package pl.ulita.worldwidewindsurfersweatherproject.weather.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Weather {
-
+public class WeatherDataDTO {
     @JsonProperty("valid_date")
     private LocalDate valid_date;
 
