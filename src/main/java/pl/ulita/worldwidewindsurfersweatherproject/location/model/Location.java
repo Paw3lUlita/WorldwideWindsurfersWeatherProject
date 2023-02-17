@@ -8,6 +8,7 @@ import pl.ulita.worldwidewindsurfersweatherproject.weather.model.WeatherForecast
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name = "locations")
 public class Location {
 
     @Id
