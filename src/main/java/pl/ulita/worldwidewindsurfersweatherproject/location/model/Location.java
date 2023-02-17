@@ -1,7 +1,8 @@
-package pl.ulita.worldwidewindsurfersweatherproject.model;
+package pl.ulita.worldwidewindsurfersweatherproject.location.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import pl.ulita.worldwidewindsurfersweatherproject.weather.model.WeatherForecastDTO;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,5 +23,5 @@ public class Location {
     private double longtitude;
 
     @Transient
-    private Weather weather;
+    private WeatherForecastDTO weather;
 }
