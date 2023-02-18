@@ -11,6 +11,8 @@ import pl.ulita.worldwidewindsurfersweatherproject.weather.model.WeatherForecast
 import pl.ulita.worldwidewindsurfersweatherproject.weather.service.WeatherRestTemplateService;
 import pl.ulita.worldwidewindsurfersweatherproject.weather.service.WeatherUseCase;
 
+import java.time.LocalDate;
+
 @RestController
 @AllArgsConstructor
 @Data
@@ -19,7 +21,8 @@ public class WeatherController {
 
     @GetMapping("/weather")
     public WeatherForecastDTO getForecast(){
-        Location location = new Location();
-        return service.getForecastByLocation(location);
+        String date = "2023-02-19";
+        LocalDate date1 = LocalDate.parse(date);
+        return service.filterForecastByDate(date1).get(0).getForecast();
     }
 }

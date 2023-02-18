@@ -24,5 +24,5 @@ public class Location {
     private double longtitude;
 
     @Transient
-    private WeatherForecastDTO weather;
+    private WeatherForecastDTO forecast;
 }
