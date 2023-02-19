@@ -11,7 +11,4 @@ INSERT INTO locations (country, latitude, longtitude, name)
 VALUES ('Cyprus', 34.6694200, 32.7013200, 'Pissouri');
 
 INSERT INTO locations (country, latitude, longtitude, name)
-VALUES ('Cyprus', 34.6694200, 32.7013200, 'Pissouri');
-
-INSERT INTO locations (country, latitude, longtitude, name)
 VALUES ('Mauritus', -20.460556, 57.313611, 'Le Morne');
