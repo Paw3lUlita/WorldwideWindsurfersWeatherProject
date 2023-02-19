@@ -1,4 +1,4 @@
-package pl.ulita.worldwidewindsurfersweatherproject.weather.model;
+package pl.ulita.worldwidewindsurfersweatherproject.weather.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -8,7 +8,7 @@ import pl.ulita.worldwidewindsurfersweatherproject.location.dto.LocationResponse
 import pl.ulita.worldwidewindsurfersweatherproject.location.model.Location;
 import pl.ulita.worldwidewindsurfersweatherproject.location.repository.LocationRepository;
 import pl.ulita.worldwidewindsurfersweatherproject.weather.dto.WeatherDataDTO;
-import pl.ulita.worldwidewindsurfersweatherproject.weather.model.WeatherForecastDTO;
+import pl.ulita.worldwidewindsurfersweatherproject.weather.dto.WeatherForecastDTO;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -24,6 +24,9 @@ public class WeatherRestTemplateService implements WeatherUseCase {
     private final RestTemplate restTemplate;
     private final LocationRepository locationRepository;
 
+    public List<Location> getAll() {
+        return locationRepository.findAll();
+    }
     public WeatherForecastDTO getForecastByLocation(Location location) {
         return restTemplate.getForObject(
                 "https://api.weatherbit.io/v2.0/forecast/daily?lat={latitude}&lon={longtitude}&key={API_KEY}",
@@ -47,7 +50,7 @@ public class WeatherRestTemplateService implements WeatherUseCase {
         return resulList;
     }
 
-    private double computeConditions(WeatherDataDTO data) {
+    public double computeConditions(WeatherDataDTO data) {
         if(!(data.getWindSpeed()>=5 && data.getWindSpeed()<=18)) {
             return 0;
         }

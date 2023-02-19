@@ -2,7 +2,7 @@ package pl.ulita.worldwidewindsurfersweatherproject.location.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import pl.ulita.worldwidewindsurfersweatherproject.weather.model.WeatherForecastDTO;
+import pl.ulita.worldwidewindsurfersweatherproject.weather.dto.WeatherForecastDTO;
 
 @AllArgsConstructor
 @NoArgsConstructor
