@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class WeatherDataDTO {
     @JsonProperty("valid_date")
+    //camel case
     private LocalDate valid_date;
 
     @JsonProperty("temp")

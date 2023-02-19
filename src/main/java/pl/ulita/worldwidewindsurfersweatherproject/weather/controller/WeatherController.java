@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+//@Data to nie controller, uzywa sie tego dla dtosow
 @Data
 public class WeatherController {
     private final WeatherUseCase service;
@@ -21,6 +22,7 @@ public class WeatherController {
     @GetMapping("/bestconditions/{date}")
     public LocationResponseDTO getForecast(@PathVariable String date){
         LocalDate date1 = LocalDate.parse(date);
+        //dwa razy odwolujesz sie do serwisu? nie mozna tego bylo zrobic w jednym zapytaniu i uzywac prywatnych metod?
         List<Location> filteredLocations = service.filterForecastByDate(date1);
         return service.findLocationWithBestConditions(filteredLocations);
     }

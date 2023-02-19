@@ -17,16 +17,22 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+//bez data
 @Data
 @AllArgsConstructor
 public class WeatherRestTemplateService implements WeatherUseCase {
+
+    // upper case dla staticow
     private final String API_KEY = "de91367822fd435b9347e0dde4d3c8ab";
     private final RestTemplate restTemplate;
     private final LocationRepository locationRepository;
 
+    //tej metody nie uzywwasz wcale
     public List<Location> getAll() {
         return locationRepository.findAll();
     }
+
+    // publicznej metody uzywasz tylko wewnatrz serwisu
     public WeatherForecastDTO getForecastByLocation(Location location) {
         return restTemplate.getForObject(
                 "https://api.weatherbit.io/v2.0/forecast/daily?lat={latitude}&lon={longtitude}&key={API_KEY}",
@@ -68,9 +74,11 @@ public class WeatherRestTemplateService implements WeatherUseCase {
             conditionsByLocation.put(location, computeConditions(location.getForecast().getData().get(0)));
         });
 
+        //inicjalizujesz zmienne ktore wykorzystujesz tylko raz
         double bestConditions = Collections.max(conditionsByLocation.values());
         Location bestLocation = new Location();
 
+        //nie wiadomo gdzie ten for sie konczy a gdzie zaczyna jesli nie dajesz {}
         for(Map.Entry<Location, Double> entry : conditionsByLocation.entrySet())
             if (entry.getValue().equals(bestConditions)) {
                 bestLocation = entry.getKey();
@@ -78,6 +86,7 @@ public class WeatherRestTemplateService implements WeatherUseCase {
 
         LocationResponseDTO responseDTO = new LocationResponseDTO();
 
+        //po co ten setter jesli mozna dac wszystko w konstruktor, ewentualnie uzyc buildera
         responseDTO.setCountry(bestLocation.getCountry());
         responseDTO.setName(bestLocation.getName());
         responseDTO.setTemperature(bestLocation.getForecast().getData().get(0).getTemperature());

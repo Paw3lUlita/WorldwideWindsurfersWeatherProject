@@ -7,7 +7,10 @@ import pl.ulita.worldwidewindsurfersweatherproject.weather.dto.WeatherForecastDT
 import java.time.LocalDate;
 import java.util.List;
 
+//nieodpowiednia nazwa, WeatherService lub cos w tym stylu
 public interface WeatherUseCase {
+
+    //tutaj raczej powinna byc wystawiona jedna metoda dla controllera, reszta z tych metod powinna juz byc tylko jako prywatne w implementacji tej klasy
 
     WeatherForecastDTO getForecastByLocation(Location location);
 

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LocationResponseDTO {
     private String name;
+    //jesli nie uzywasz adnotacji nad zadnym polem to nie musisz robic entera pomiedzy polami
 
     private String country;
 

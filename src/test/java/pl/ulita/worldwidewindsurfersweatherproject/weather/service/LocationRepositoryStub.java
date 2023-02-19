@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @NoArgsConstructor
+//w pakiecie service stub repository?
 public class LocationRepositoryStub implements LocationRepository {
     @Override
     public void flush() {
