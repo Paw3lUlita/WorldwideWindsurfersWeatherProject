@@ -7,13 +7,6 @@ import pl.ulita.worldwidewindsurfersweatherproject.weather.dto.WeatherForecastDT
 import java.time.LocalDate;
 import java.util.List;
 
-public interface WeatherUseCase {
-
-    WeatherForecastDTO getForecastByLocation(Location location);
-
-    List<Location> getForecastForAllLocations();
-
-    List<Location> filterForecastByDate(LocalDate date);
-
-    LocationResponseDTO findLocationWithBestConditions(List<Location> locations);
+public interface WeatherService {
+    LocationResponseDTO findLocationWithBestConditions(LocalDate date);
 }

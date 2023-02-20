@@ -1,4 +1,4 @@
-package pl.ulita.worldwidewindsurfersweatherproject.weather.service;
+package pl.ulita.worldwidewindsurfersweatherproject.weather.service.stubrepository;
 
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Example;

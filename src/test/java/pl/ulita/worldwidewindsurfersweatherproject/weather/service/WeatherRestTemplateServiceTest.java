@@ -1,20 +1,14 @@
 package pl.ulita.worldwidewindsurfersweatherproject.weather.service;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestTemplate;
-import pl.ulita.worldwidewindsurfersweatherproject.location.model.Location;
-import pl.ulita.worldwidewindsurfersweatherproject.location.repository.LocationRepository;
 import pl.ulita.worldwidewindsurfersweatherproject.weather.dto.WeatherDataDTO;
+import pl.ulita.worldwidewindsurfersweatherproject.weather.service.stubrepository.LocationRepositoryStub;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.*;
 
 class WeatherRestTemplateServiceTest {
 

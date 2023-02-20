@@ -19,50 +19,48 @@ import java.util.Map;
 @Service
 @Data
 @AllArgsConstructor
-public class WeatherRestTemplateService implements WeatherUseCase {
-    private final String API_KEY = "de91367822fd435b9347e0dde4d3c8ab";
+public class WeatherRestTemplateService implements WeatherService {
+    private static final String API_KEY = "de91367822fd435b9347e0dde4d3c8ab";
     private final RestTemplate restTemplate;
     private final LocationRepository locationRepository;
 
-    public List<Location> getAll() {
-        return locationRepository.findAll();
-    }
-    public WeatherForecastDTO getForecastByLocation(Location location) {
+    private WeatherForecastDTO getForecastByLocation(Location location) {
         return restTemplate.getForObject(
                 "https://api.weatherbit.io/v2.0/forecast/daily?lat={latitude}&lon={longtitude}&key={API_KEY}",
                 WeatherForecastDTO.class, location.getLatitude(), location.getLongtitude(), API_KEY);
     }
 
-    public List<Location> getForecastForAllLocations() {
+    private List<Location> getForecastForAllLocations() {
         List<Location> returnList = locationRepository.findAll();
         returnList.forEach(location ->
                 location.setForecast(getForecastByLocation(location)));
         return returnList;
     }
 
-    public List<Location> filterForecastByDate(LocalDate date){
-       List<Location> resulList = List.copyOf(getForecastForAllLocations());
+    private List<Location> filterForecastByDate(LocalDate date, List<Location> locations) {
+        List<Location> resulList = List.copyOf(locations);
         resulList.forEach(location -> location.getForecast().setData(
                 location.getForecast().getData().stream()
-                        .filter(weatherDataDTO -> weatherDataDTO.getValid_date().equals(date))
+                        .filter(weatherDataDTO -> weatherDataDTO.getValidDate().equals(date))
                         .toList())
         );
         return resulList;
     }
 
-    public double computeConditions(WeatherDataDTO data) {
-        if(!(data.getWindSpeed()>=5 && data.getWindSpeed()<=18)) {
+    double computeConditions(WeatherDataDTO data) {
+        if (!(data.getWindSpeed() >= 5 && data.getWindSpeed() <= 18)) {
             return 0;
         }
-        if(!(data.getTemperature()>=5 && data.getTemperature()<=35)) {
+        if (!(data.getTemperature() >= 5 && data.getTemperature() <= 35)) {
             return 0;
         }
 
-        return data.getWindSpeed()*3 + data.getTemperature();
+        return data.getWindSpeed() * 3 + data.getTemperature();
     }
 
-    public LocationResponseDTO findLocationWithBestConditions(List<Location> locations) {
+    public LocationResponseDTO findLocationWithBestConditions(LocalDate date) {
         Map<Location, Double> conditionsByLocation = new HashMap<>();
+        List<Location> locations = filterForecastByDate(date, getForecastForAllLocations());
 
         locations.forEach(location -> {
             conditionsByLocation.put(location, computeConditions(location.getForecast().getData().get(0)));
@@ -71,24 +69,16 @@ public class WeatherRestTemplateService implements WeatherUseCase {
         double bestConditions = Collections.max(conditionsByLocation.values());
         Location bestLocation = new Location();
 
-        for(Map.Entry<Location, Double> entry : conditionsByLocation.entrySet())
+        for (Map.Entry<Location, Double> entry : conditionsByLocation.entrySet()) {
             if (entry.getValue().equals(bestConditions)) {
                 bestLocation = entry.getKey();
             }
+        }
 
-        LocationResponseDTO responseDTO = new LocationResponseDTO();
-
-        responseDTO.setCountry(bestLocation.getCountry());
-        responseDTO.setName(bestLocation.getName());
-        responseDTO.setTemperature(bestLocation.getForecast().getData().get(0).getTemperature());
-        responseDTO.setWindSpeed(bestLocation.getForecast().getData().get(0).getWindSpeed());
-
-        return responseDTO;
-
+        return new LocationResponseDTO(
+                bestLocation.getName(),
+                bestLocation.getCountry(),
+                bestLocation.getForecast().getData().get(0).getTemperature(),
+                bestLocation.getForecast().getData().get(0).getWindSpeed());
     }
-
-
-
-
-
 }
