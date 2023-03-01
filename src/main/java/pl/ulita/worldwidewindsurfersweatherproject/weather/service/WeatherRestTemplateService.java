@@ -3,12 +3,11 @@ package pl.ulita.worldwidewindsurfersweatherproject.weather.service;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import pl.ulita.worldwidewindsurfersweatherproject.location.dto.LocationResponseDTO;
 import pl.ulita.worldwidewindsurfersweatherproject.location.model.Location;
 import pl.ulita.worldwidewindsurfersweatherproject.location.repository.LocationRepository;
 import pl.ulita.worldwidewindsurfersweatherproject.weather.dto.WeatherDataDTO;
-import pl.ulita.worldwidewindsurfersweatherproject.weather.dto.WeatherForecastDTO;
+import pl.ulita.worldwidewindsurfersweatherproject.weather.httpclient.RestTemplateHttpClient;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -20,20 +19,13 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 public class WeatherRestTemplateService implements WeatherService {
-    private static final String API_KEY = "de91367822fd435b9347e0dde4d3c8ab";
-    private final RestTemplate restTemplate;
+    private final RestTemplateHttpClient httpClient;
     private final LocationRepository locationRepository;
-
-    private WeatherForecastDTO getForecastByLocation(Location location) {
-        return restTemplate.getForObject(
-                "https://api.weatherbit.io/v2.0/forecast/daily?lat={latitude}&lon={longtitude}&key={API_KEY}",
-                WeatherForecastDTO.class, location.getLatitude(), location.getLongtitude(), API_KEY);
-    }
 
     private List<Location> getForecastForAllLocations() {
         List<Location> returnList = locationRepository.findAll();
         returnList.forEach(location ->
-                location.setForecast(getForecastByLocation(location)));
+                location.setForecast(httpClient.getForecastByLocation(location)));
         return returnList;
     }
 
@@ -47,7 +39,7 @@ public class WeatherRestTemplateService implements WeatherService {
         return resulList;
     }
 
-    double computeConditions(WeatherDataDTO data) {
+    private double computeConditions(WeatherDataDTO data) {
         if (!(data.getWindSpeed() >= 5 && data.getWindSpeed() <= 18)) {
             return 0;
         }
