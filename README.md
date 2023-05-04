@@ -15,7 +15,7 @@ insertion file with sample locations is in source directory
 
 table 'locations' creating script is in source directory
 
-you can use docker-compose.yml file in docker direcktory to set up database
+you can use docker-compose.yml file in docker directory to set up database
 just install docker, go to docker directory in terminal and type "docker-compose up -d"
 
 to built and run your application, just clone repository, go to project directory
