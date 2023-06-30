@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LocationResponseDTO {
     private String name;
-
     private String country;
-
     private double temperature;
-
     private double windSpeed;
 }

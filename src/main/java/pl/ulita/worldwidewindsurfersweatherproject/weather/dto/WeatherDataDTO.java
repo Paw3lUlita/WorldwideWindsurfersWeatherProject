@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class WeatherDataDTO {
     @JsonProperty("valid_date")
-    private LocalDate valid_date;
+    private LocalDate validDate;
 
     @JsonProperty("temp")
     private double temperature;
